@@ -28,8 +28,8 @@
     }
 
     #add-task {
-        background-color: rgb(29, 28, 29);
-        color: #fff;
+        background-color: rgb(15, 15, 15);
+        color: #e2dede;
         border-right: 50px;
         padding: 20px;
     }
@@ -46,12 +46,11 @@
     .table-box {
         height: 100vh;
     }
-    
 </style>
 
 <body>
     <div class="box task-box">
-        <input name="task-name " id="task-name" placeholder="New Task" />
+        <input name="task-name " id="task-name" onchange="addTask()" placeholder="New Task" />
         <button id="add-task">Add Task</button>
     </div>
     <div class="box table-box">
@@ -61,19 +60,52 @@
                 <th>Done</th>
                 <th>Delete</th>
             </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+
         </table>
     </div>
 </body>
 <script>
-    let button= document.getElementById("add-task")
-    button.addEventListener("click",function(){
-        localStorage.setItem("task","task yaha ayega input se")
+    let button = document.getElementById("add-task");
+    let input = document.getElementById("task-name");
+    let inputvalue;
+    let tasks = JSON.parse(localStorage.getItem("allTasks")) |[];
+    let allTasks = {}
+    let table = document.querySelector('tbody')
+    
+
+    function addTask() {
+        inputvalue = input.value;
+        tasks.push(inputvalue)
+    }
+    allTasks['task${task.length}'] = inputvalue;
+    button.addEventListener("click", function () {
+        localStorage.setItem("allTasks", JSON.stringify(tasks))
+        localStorage.setItem("taskNumber", tasks.length)
+        table.insertAdjacentHTML("beforeend",
+            `
+        <tr>
+                <td>${inputvalue}</td>
+                <td><button>complete</button></td>
+                <td><button>delete</button></td>
+            </tr>
+            `
+
+        )
+
     })
+    let storedDate = localStorage.getItem("allTasks")
+    storedDate.map(s)=> {
+        table.insertAdjacentHTML("beforeend",
+            `
+        <tr>
+                <td>${inputvalue}</td>
+                <td><button>complete</button></td>
+                <td><button>delete</button></td>
+            </tr>
+            `
+    }
+
+
 </script>
 
 </html>
